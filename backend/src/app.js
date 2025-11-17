@@ -6,7 +6,7 @@ const authRoutes = require("./routes/authRouts.js")
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:3000', 'https://workin.vercel.app'];
+const allowedOrigins = ['http://localhost:3000', 'https://workin-self.vercel.app'];
 
 app.use(cors({
   origin: allowedOrigins,
