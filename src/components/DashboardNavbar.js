@@ -8,15 +8,38 @@ export default function DashboardNavbar() {
   const router = useRouter();
 
   useEffect(() => {
-    const name = localStorage.getItem('userName');
-    if (name) {
-      setUserName(name);
-    }
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (token) {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          const userId = payload.userId;
+          
+          const res = await fetch(`http://localhost:8000/api/auth/user/${userId}`);
+          if (res.ok) {
+            const user = await res.json();
+            setUserName(user.name);
+            localStorage.setItem('userName', user.name);
+          } else {
+            // Fallback to localStorage
+            const name = localStorage.getItem('userName');
+            if (name) setUserName(name);
+          }
+        }
+      } catch (err) {
+        // Fallback to localStorage
+        const name = localStorage.getItem('userName');
+        if (name) setUserName(name);
+      }
+    };
+    
+    fetchUserData();
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
     router.push('/login');
   };
 

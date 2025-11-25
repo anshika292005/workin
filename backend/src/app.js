@@ -2,7 +2,9 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const authRoutes = require("./routes/authRouts.js")
+const authRoutes = require("./routes/authRouts.js");
+const profileRoutes = require("./routes/profileRoutes.js");
+const jobRoutes = require("./routes/jobRoutes.js");
 
 const app = express();
 
@@ -25,6 +27,8 @@ app.get('/', (req, res) => {
   res.json({ message: 'Workin Backend API is running!', status: 'OK' });
 });
 
-app.use("/api/auth/", authRoutes)
+app.use("/api/auth/", authRoutes);
+app.use("/api/profile/", profileRoutes);
+app.use("/api/jobs/", jobRoutes);
 
 module.exports = app;

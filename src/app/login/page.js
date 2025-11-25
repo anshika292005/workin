@@ -14,7 +14,7 @@ export default function Login() {
     setError('');
 
     try {
-      const res = await fetch('https://workin-slbh.onrender.com/api/auth/login', {
+      const res = await fetch('http://localhost:8000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
@@ -27,6 +27,7 @@ export default function Login() {
         console.log('JWT Token:', data.token);
         localStorage.setItem('token', data.token);
         localStorage.setItem('userName', data.name);
+        localStorage.setItem('userRole', data.role);
         router.push('/dashboard');
       } else {
         setError(data.message);

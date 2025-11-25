@@ -9,6 +9,7 @@ export default function Signup() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState('candidate');
   const [error, setError] = useState('');
   const router = useRouter();
 
@@ -17,10 +18,10 @@ export default function Signup() {
     setError('');
 
     try {
-      const res = await fetch('https://workin-slbh.onrender.com/api/auth/signup', {
+      const res = await fetch('http://localhost:8000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phoneNumber, password, confirmPassword }),
+        body: JSON.stringify({ name, email, phoneNumber, password, confirmPassword, role }),
       });
 
       const data = await res.json();
@@ -83,6 +84,17 @@ export default function Signup() {
               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder:text-gray-400 text-gray-900"
               required
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">I am a</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+            >
+              <option value="candidate">Job Seeker</option>
+              <option value="hr">HR / Recruiter</option>
+            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
