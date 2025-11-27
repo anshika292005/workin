@@ -15,7 +15,7 @@ export default function DashboardNavbar() {
           const payload = JSON.parse(atob(token.split('.')[1]));
           const userId = payload.userId;
           
-          const res = await fetch(`http://localhost:8000/api/auth/user/${userId}`);
+          const res = await fetch(`https://workin-slbh.onrender.com/api/auth/user/${userId}`);
           if (res.ok) {
             const user = await res.json();
             setUserName(user.name);
@@ -44,23 +44,40 @@ export default function DashboardNavbar() {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-100 h-16 fixed top-0 left-0 right-0 z-10">
-      <div className="h-full px-4 flex justify-between items-center">
-        <Link href="/dashboard" className="flex items-center">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-2">
-            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V8a2 2 0 012-2V6z" />
-            </svg>
+    <nav className="bg-white shadow-md border-b border-gray-200 h-14 fixed top-0 left-0 right-0 z-50">
+      <div className="h-full px-6 flex justify-between items-center">
+        <Link href="/dashboard" className="flex items-center hover:opacity-80 transition-opacity">
+          <div className="w-8 h-8 bg-blue-700 rounded flex items-center justify-center mr-2">
+            <span className="text-white font-bold text-sm">W</span>
           </div>
-          <h1 className="text-2xl font-bold text-blue-600">Workin</h1>
+          <h1 className="text-xl font-semibold text-blue-700">Workin</h1>
         </Link>
-        <div className="flex items-center space-x-4">
-          <span className="text-gray-700 font-medium">{userName}</span>
+        
+        <div className="flex-1 max-w-md mx-8">
+          <div className="relative">
+            <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"/>
+            </svg>
+            <input 
+              type="text" 
+              placeholder="Search jobs, companies..."
+              className="w-full pl-10 pr-4 py-2 bg-gray-100 border-0 rounded-md text-sm focus:bg-white focus:ring-2 focus:ring-blue-600 focus:outline-none transition-all"
+            />
+          </div>
+        </div>
+        
+        <div className="flex items-center space-x-6">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
+              <span className="text-gray-600 font-medium text-sm">{userName.charAt(0).toUpperCase()}</span>
+            </div>
+            <span className="text-gray-700 font-medium text-sm">{userName}</span>
+          </div>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 text-gray-600 hover:text-red-600 transition-colors"
+            className="text-gray-600 hover:text-gray-800 text-sm font-medium transition-colors"
           >
-            Logout
+            Sign out
           </button>
         </div>
       </div>

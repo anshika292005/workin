@@ -32,7 +32,7 @@ export default function Dashboard() {
     try {
       if (role === 'candidate') {
         // Fetch recent jobs for candidates
-        const jobsRes = await fetch('http://localhost:8000/api/jobs/');
+        const jobsRes = await fetch('https://workin-slbh.onrender.com/api/jobs/');
         if (jobsRes.ok) {
           const jobsData = await jobsRes.json();
           setJobs(jobsData.slice(0, 6)); // Show latest 6 jobs
@@ -44,7 +44,7 @@ export default function Dashboard() {
         const payload = JSON.parse(atob(token.split('.')[1]));
         const candidateId = payload.userId;
         
-        const appsRes = await fetch(`http://localhost:8000/api/jobs/applications/${candidateId}`);
+        const appsRes = await fetch(`https://workin-slbh.onrender.com/api/jobs/applications/${candidateId}`);
         if (appsRes.ok) {
           const appsData = await appsRes.json();
           setStats(prev => ({ ...prev, applications: appsData.length }));
@@ -55,7 +55,7 @@ export default function Dashboard() {
         const payload = JSON.parse(atob(token.split('.')[1]));
         const hrId = payload.userId;
         
-        const jobsRes = await fetch(`http://localhost:8000/api/jobs/hr/${hrId}`);
+        const jobsRes = await fetch(`https://workin-slbh.onrender.com/api/jobs/hr/${hrId}`);
         if (jobsRes.ok) {
           const jobsData = await jobsRes.json();
           setJobs(jobsData.slice(0, 3)); // Show fewer jobs to make room for applications
@@ -65,7 +65,7 @@ export default function Dashboard() {
           let totalApplications = 0;
           
           for (const job of jobsData) {
-            const appRes = await fetch(`http://localhost:8000/api/jobs/${job.id}/applications`);
+            const appRes = await fetch(`https://workin-slbh.onrender.com/api/jobs/${job.id}/applications`);
             if (appRes.ok) {
               const applications = await appRes.json();
               totalApplications += applications.length;
@@ -93,7 +93,7 @@ export default function Dashboard() {
     const response = prompt(`Enter response message for ${status} application (optional):`);
     
     try {
-      const res = await fetch(`http://localhost:8000/api/jobs/applications/${applicationId}/status`, {
+      const res = await fetch(`https://workin-slbh.onrender.com/api/jobs/applications/${applicationId}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status, response: response || '' })
@@ -118,7 +118,7 @@ export default function Dashboard() {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const candidateId = payload.userId;
 
-      const res = await fetch(`http://localhost:8000/api/jobs/apply/${jobId}/${candidateId}`, {
+      const res = await fetch(`https://workin-slbh.onrender.com/api/jobs/apply/${jobId}/${candidateId}`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -138,7 +138,7 @@ export default function Dashboard() {
       <div className="min-h-screen bg-gray-50">
         <DashboardNavbar />
         <Sidebar />
-        <main className="ml-64 mt-16 p-8">
+        <main className="ml-64 mt-14 p-6">
           <div className="text-center">Loading dashboard...</div>
         </main>
       </div>
@@ -149,12 +149,12 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-50">
       <DashboardNavbar />
       <Sidebar />
-      <main className="ml-64 mt-16 p-8">
-        <div className="max-w-7xl mx-auto">
+      <main className="ml-64 mt-14 p-6">
+        <div className="max-w-6xl mx-auto">
           {/* Welcome Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome back, {userName}!</h1>
-            <p className="text-gray-600 mt-2">
+          <div className="mb-6">
+            <h1 className="text-2xl font-semibold text-gray-900">Welcome back, {userName}!</h1>
+            <p className="text-gray-600 mt-1 text-sm">
               {userRole === 'candidate' ? 'Find your next opportunity' : 'Manage your job postings'}
             </p>
           </div>
